@@ -5,4 +5,4 @@ export const middleware = (req: Request, res: Response, next: NextFunction) => {
     next();
     const endTime = Date.now();
     console.log(`Request took ${endTime - startTime}ms`);
-}
+}   
