@@ -1,8 +1,10 @@
 import type { NextFunction, Request, Response } from "express";
 import { requestCounter } from "./requestCount.js";
+import { activeRequestsGauge } from "./activeRequests.js";
 
 export const metricsMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const startTime = Date.now();
+    activeRequestsGauge.inc();
 
     res.on('finish', function() {
         const endTime = Date.now();
@@ -14,6 +16,7 @@ export const metricsMiddleware = (req: Request, res: Response, next: NextFunctio
             route: req.route ? req.route.path : req.path,
             status_code: res.statusCode
         });
+        activeRequestsGauge.dec();
     });
     next();
 }

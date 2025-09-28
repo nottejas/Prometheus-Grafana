@@ -9,7 +9,8 @@ app.use(middleware.middleware);
 app.use(metricsMiddleware);
 
 
-app.get("/user", (req, res) => {
+app.get("/user", async (req, res) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000))
     res.send({  
         name: "Tejas p",
         age: 25,
